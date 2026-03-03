@@ -79,6 +79,12 @@ Go to **Settings → Project Pulse**:
 - **Custom dimensions** — Define your own dimensions when "Custom" is selected.
 - **Target folders** — Limit the dashboard to specific folders (comma-separated). Leave empty to scan all.
 
+## Support
+
+If you find this plugin useful, consider supporting its development:
+
+<a href="https://buymeacoffee.com/moabdel" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="48"></a>
+
 ## License
 
 [MIT](LICENSE)
