@@ -55,7 +55,7 @@ export class ScoringModal extends Modal {
 			text: "Save",
 			cls: "pulse-save-btn mod-cta",
 		});
-		saveBtn.addEventListener("click", () => this.save());
+		saveBtn.addEventListener("click", () => void this.save());
 	}
 
 	onClose(): void {

@@ -1,7 +1,6 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import type ProjectPulsePlugin from "./main";
 import { PRESETS } from "./presets";
-import { Dimension } from "./types";
 
 export class ProjectPulseSettingTab extends PluginSettingTab {
 	plugin: ProjectPulsePlugin;
@@ -38,7 +37,9 @@ export class ProjectPulseSettingTab extends PluginSettingTab {
 
 		// Custom dimensions (only when "custom" is selected)
 		if (this.plugin.settings.activePreset === "custom") {
-			containerEl.createEl("h3", { text: "Custom Dimensions" });
+			new Setting(containerEl)
+				.setName("Custom dimensions")
+				.setHeading();
 
 			this.plugin.settings.customDimensions.forEach((dim, index) => {
 				new Setting(containerEl)

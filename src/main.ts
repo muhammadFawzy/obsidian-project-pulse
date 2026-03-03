@@ -37,22 +37,26 @@ export default class ProjectPulsePlugin extends Plugin {
 		this.addCommand({
 			id: "open-dashboard",
 			name: "Open dashboard",
-			callback: () => this.activateDashboard(),
+			callback: () => void this.activateDashboard(),
 		});
 
 		this.addRibbonIcon("activity", "Project Pulse", () => {
-			this.activateDashboard();
+			void this.activateDashboard();
 		});
 
 		registerCodeBlock(this);
 	}
 
 	onunload(): void {
-		this.app.workspace.detachLeavesOfType(DASHBOARD_VIEW_TYPE);
+		// Obsidian handles leaf cleanup automatically
 	}
 
 	private async activateDashboard(): Promise<void> {
-		this.app.workspace.detachLeavesOfType(DASHBOARD_VIEW_TYPE);
+		const existing = this.app.workspace.getLeavesOfType(DASHBOARD_VIEW_TYPE);
+		if (existing.length > 0) {
+			this.app.workspace.revealLeaf(existing[0]!);
+			return;
+		}
 
 		const leaf = this.app.workspace.getRightLeaf(false);
 		if (leaf) {

@@ -167,13 +167,13 @@ export class DashboardView extends ItemView {
 		// Total count
 		const countCard = row.createDiv({ cls: "pulse-summary-card" });
 		countCard.createDiv({ cls: "pulse-summary-value", text: String(projects.length) });
-		countCard.createDiv({ cls: "pulse-summary-label", text: "Scored Projects" });
+		countCard.createDiv({ cls: "pulse-summary-label", text: "Scored projects" });
 
 		// Average score
 		const avg = this.computeOverallAverage(projects, dimensions);
 		const avgCard = row.createDiv({ cls: "pulse-summary-card" });
 		avgCard.createDiv({ cls: "pulse-summary-value", text: avg.toFixed(1) });
-		avgCard.createDiv({ cls: "pulse-summary-label", text: "Avg Score" });
+		avgCard.createDiv({ cls: "pulse-summary-label", text: "Avg score" });
 
 		// Most recent
 		const mostRecent = projects.reduce((latest, p) =>
@@ -305,10 +305,11 @@ export class DashboardView extends ItemView {
 
 			// Checkbox for comparison
 			const checkCell = row.createEl("td", { cls: "pulse-select-col" });
-			const checkbox = checkCell.createEl("input") as HTMLInputElement;
-			checkbox.type = "checkbox";
+			const checkbox = checkCell.createEl("input", {
+				type: "checkbox",
+				cls: "pulse-select-checkbox",
+			}) as HTMLInputElement;
 			checkbox.checked = this.selectedPaths.has(project.file.path);
-			checkbox.addClass("pulse-select-checkbox");
 			checkbox.addEventListener("change", () => {
 				if (checkbox.checked) {
 					if (this.selectedPaths.size < 3) {
@@ -332,7 +333,7 @@ export class DashboardView extends ItemView {
 			});
 			link.addEventListener("click", (e) => {
 				e.preventDefault();
-				this.app.workspace.getLeaf(false).openFile(project.file);
+				void this.app.workspace.getLeaf(false).openFile(project.file);
 			});
 
 			// Dimension scores
