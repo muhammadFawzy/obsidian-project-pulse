@@ -80,12 +80,12 @@ export class ScoringModal extends Modal {
 			scores[id] = parseInt(slider.value, 10);
 		}
 
-		const today = new Date().toISOString().split("T")[0];
+		const now = new Date().toISOString();
 
 		await writePulseData(this.app, this.file, {
 			preset: this.plugin.settings.activePreset,
 			scores,
-			last_updated: today ?? "",
+			last_updated: now,
 		});
 
 		this.close();

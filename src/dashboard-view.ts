@@ -22,9 +22,12 @@ export class DashboardView extends ItemView {
 	private comparisonChart: Chart | null = null;
 	private showComparisonChart = false;
 
+	private metadataHandler: () => void;
+
 	constructor(leaf: WorkspaceLeaf, plugin: ProjectPulsePlugin) {
 		super(leaf);
 		this.plugin = plugin;
+		this.metadataHandler = () => this.refresh();
 	}
 
 	getViewType(): string {
@@ -40,10 +43,12 @@ export class DashboardView extends ItemView {
 	}
 
 	async onOpen(): Promise<void> {
+		this.plugin.app.metadataCache.on("changed", this.metadataHandler);
 		this.refresh();
 	}
 
 	async onClose(): Promise<void> {
+		this.plugin.app.metadataCache.off("changed", this.metadataHandler);
 		if (this.comparisonChart) {
 			this.comparisonChart.destroy();
 			this.comparisonChart = null;
@@ -160,7 +165,7 @@ export class DashboardView extends ItemView {
 	private renderSummaryCards(
 		container: HTMLElement,
 		projects: ScoredProject[],
-		dimensions: Dimension[]
+		_dimensions: Dimension[]
 	): void {
 		const row = container.createDiv({ cls: "pulse-summary-row" });
 
@@ -168,45 +173,6 @@ export class DashboardView extends ItemView {
 		const countCard = row.createDiv({ cls: "pulse-summary-card" });
 		countCard.createDiv({ cls: "pulse-summary-value", text: String(projects.length) });
 		countCard.createDiv({ cls: "pulse-summary-label", text: "Scored projects" });
-
-		// Average score
-		const avg = this.computeOverallAverage(projects, dimensions);
-		const avgCard = row.createDiv({ cls: "pulse-summary-card" });
-		avgCard.createDiv({ cls: "pulse-summary-value", text: avg.toFixed(1) });
-		avgCard.createDiv({ cls: "pulse-summary-label", text: "Avg score" });
-
-		// Most recent
-		const mostRecent = projects.reduce((latest, p) =>
-			p.data.last_updated > latest.data.last_updated ? p : latest
-		);
-		const recentCard = row.createDiv({ cls: "pulse-summary-card" });
-		recentCard.createDiv({
-			cls: "pulse-summary-value",
-			text: mostRecent.file.basename,
-		});
-		recentCard.createDiv({
-			cls: "pulse-summary-label",
-			text: mostRecent.data.last_updated,
-		});
-	}
-
-	private computeOverallAverage(projects: ScoredProject[], dimensions: Dimension[]): number {
-		if (projects.length === 0) return 0;
-
-		let total = 0;
-		let count = 0;
-
-		for (const p of projects) {
-			for (const dim of dimensions) {
-				const val = p.data.scores[dim.id];
-				if (val !== undefined) {
-					total += val;
-					count++;
-				}
-			}
-		}
-
-		return count > 0 ? total / count : 0;
 	}
 
 	private getProjectAverage(data: PulseScore, dimensions: Dimension[]): number {
@@ -353,7 +319,7 @@ export class DashboardView extends ItemView {
 			row.createEl("td", { text: avg.toFixed(1) });
 
 			// Last updated
-			row.createEl("td", { text: project.data.last_updated });
+			row.createEl("td", { text: formatDate(project.data.last_updated) });
 		}
 	}
 
@@ -404,4 +370,8 @@ function formatDots(value: number): string {
 	const filled = "●".repeat(value);
 	const empty = "○".repeat(5 - value);
 	return filled + empty;
+}
+
+function formatDate(timestamp: string): string {
+	return timestamp.split("T")[0] ?? timestamp;
 }
