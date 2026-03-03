@@ -3,6 +3,7 @@ import { ProjectPulseSettings, DEFAULT_SETTINGS } from "./types";
 import { ProjectPulseSettingTab } from "./settings";
 import { ScoringModal } from "./scoring-modal";
 import { DashboardView, DASHBOARD_VIEW_TYPE } from "./dashboard-view";
+import { registerCodeBlock } from "./code-block";
 
 export default class ProjectPulsePlugin extends Plugin {
 	settings: ProjectPulseSettings = DEFAULT_SETTINGS;
@@ -43,7 +44,7 @@ export default class ProjectPulsePlugin extends Plugin {
 			this.activateDashboard();
 		});
 
-		// Phase 4: pulse-radar code block processor
+		registerCodeBlock(this);
 	}
 
 	onunload(): void {

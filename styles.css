@@ -146,3 +146,47 @@
 	color: var(--text-muted);
 	font-size: 0.85em;
 }
+
+/* Charts */
+
+.pulse-chart-container {
+	max-width: 400px;
+	margin: 12px auto;
+}
+
+.pulse-compare-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.pulse-compare-hint {
+	color: var(--text-muted);
+	font-size: 0.85em;
+}
+
+.pulse-select-col {
+	width: 30px;
+	text-align: center;
+}
+
+.pulse-select-checkbox {
+	cursor: pointer;
+}
+
+.pulse-scorecard {
+	padding: 8px 0;
+}
+
+.pulse-scorecard-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 4px 0;
+}
+
+.pulse-scorecard-label {
+	flex: 0 0 130px;
+	font-weight: 500;
+}

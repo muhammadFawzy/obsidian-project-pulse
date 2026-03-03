@@ -3,6 +3,8 @@ import type ProjectPulsePlugin from "./main";
 import { Dimension, PulseScore } from "./types";
 import { getPresetById } from "./presets";
 import { readPulseData } from "./frontmatter";
+import { renderRadarChart, ChartDataset } from "./chart-renderer";
+import { Chart } from "chart.js";
 
 export const DASHBOARD_VIEW_TYPE = "project-pulse-dashboard";
 
@@ -16,6 +18,8 @@ export class DashboardView extends ItemView {
 	private sortColumn = "name";
 	private sortAsc = true;
 	private folderFilter = "";
+	private selectedPaths = new Set<string>();
+	private comparisonChart: Chart | null = null;
 
 	constructor(leaf: WorkspaceLeaf, plugin: ProjectPulsePlugin) {
 		super(leaf);
@@ -39,6 +43,10 @@ export class DashboardView extends ItemView {
 	}
 
 	async onClose(): Promise<void> {
+		if (this.comparisonChart) {
+			this.comparisonChart.destroy();
+			this.comparisonChart = null;
+		}
 		this.contentEl.empty();
 	}
 
@@ -66,6 +74,9 @@ export class DashboardView extends ItemView {
 
 		// Summary cards
 		this.renderSummaryCards(contentEl, filtered, dimensions);
+
+		// Comparison chart (if projects selected)
+		this.renderComparisonSection(contentEl, filtered, dimensions);
 
 		// Sortable table
 		this.renderTable(contentEl, filtered, dimensions);
@@ -210,6 +221,47 @@ export class DashboardView extends ItemView {
 		return count > 0 ? total / count : 0;
 	}
 
+	private renderComparisonSection(
+		container: HTMLElement,
+		projects: ScoredProject[],
+		dimensions: Dimension[]
+	): void {
+		const count = this.selectedPaths.size;
+
+		// Show chart if we have selected projects
+		if (count >= 2 && count <= 3) {
+			const selected = projects.filter((p) => this.selectedPaths.has(p.file.path));
+			if (selected.length >= 2) {
+				const chartContainer = container.createDiv({ cls: "pulse-chart-container" });
+				const datasets: ChartDataset[] = selected.map((p) => ({
+					label: p.file.basename,
+					scores: p.data.scores,
+				}));
+				if (this.comparisonChart) {
+					this.comparisonChart.destroy();
+				}
+				this.comparisonChart = renderRadarChart(chartContainer, datasets, dimensions);
+			}
+		}
+
+		if (count > 0) {
+			const row = container.createDiv({ cls: "pulse-compare-row" });
+			const clearBtn = row.createEl("button", { text: "Clear selection" });
+			clearBtn.addEventListener("click", () => {
+				this.selectedPaths.clear();
+				if (this.comparisonChart) {
+					this.comparisonChart.destroy();
+					this.comparisonChart = null;
+				}
+				this.refresh();
+			});
+
+			if (count === 1) {
+				row.createSpan({ cls: "pulse-compare-hint", text: "Select 1-2 more to compare" });
+			}
+		}
+	}
+
 	private renderTable(
 		container: HTMLElement,
 		projects: ScoredProject[],
@@ -223,6 +275,8 @@ export class DashboardView extends ItemView {
 		const thead = table.createEl("thead");
 		const headerRow = thead.createEl("tr");
 
+		// Select column header
+		headerRow.createEl("th", { text: "", cls: "pulse-select-col" });
 		this.createSortableHeader(headerRow, "Project", "name");
 		for (const dim of dimensions) {
 			this.createSortableHeader(headerRow, dim.label, dim.id);
@@ -234,6 +288,25 @@ export class DashboardView extends ItemView {
 		const tbody = table.createEl("tbody");
 		for (const project of sorted) {
 			const row = tbody.createEl("tr");
+
+			// Checkbox for comparison
+			const checkCell = row.createEl("td", { cls: "pulse-select-col" });
+			const checkbox = checkCell.createEl("input") as HTMLInputElement;
+			checkbox.type = "checkbox";
+			checkbox.checked = this.selectedPaths.has(project.file.path);
+			checkbox.addClass("pulse-select-checkbox");
+			checkbox.addEventListener("change", () => {
+				if (checkbox.checked) {
+					if (this.selectedPaths.size < 3) {
+						this.selectedPaths.add(project.file.path);
+					} else {
+						checkbox.checked = false;
+					}
+				} else {
+					this.selectedPaths.delete(project.file.path);
+				}
+				this.refresh();
+			});
 
 			// Project name (clickable)
 			const nameCell = row.createEl("td");
