@@ -92,7 +92,7 @@ export class ProjectPulseSettingTab extends PluginSettingTab {
 			)
 			.addText((text) =>
 				text
-					.setPlaceholder("Projects, Work/Active")
+					.setPlaceholder("Projects, Work/active")
 					.setValue(this.plugin.settings.targetFolders.join(", "))
 					.onChange(async (value) => {
 						this.plugin.settings.targetFolders = value

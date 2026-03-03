@@ -274,7 +274,7 @@ export class DashboardView extends ItemView {
 			const checkbox = checkCell.createEl("input", {
 				type: "checkbox",
 				cls: "pulse-select-checkbox",
-			}) as HTMLInputElement;
+			});
 			checkbox.checked = this.selectedPaths.has(project.file.path);
 			checkbox.addEventListener("change", () => {
 				if (checkbox.checked) {
