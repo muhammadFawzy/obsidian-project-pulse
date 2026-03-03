@@ -4,9 +4,9 @@ Score your projects across custom dimensions (1â€“5) and visualize trade-offs â€
 
 Inspired by *The Staff Engineer's Path* by Tanya Reilly, but generalized for anyone who juggles multiple projects.
 
-![Dashboard with sortable table and dot scores](screenshots/dashboard.png)
+![Dashboard with sortable table and dot scores](screenshots/dashboard.png?v=2)
 
-![Radar chart comparing 3 projects](screenshots/radar-chart.png)
+![Radar chart comparing projects](screenshots/radar-chart.png?v=2)
 
 ![Scoring modal with sliders](screenshots/scoring-modal.png)
 
