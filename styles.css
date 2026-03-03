@@ -1,0 +1,45 @@
+/* Project Pulse styles */
+
+.pulse-modal {
+	padding: 1em;
+}
+
+.pulse-modal h2 {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+.pulse-slider-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.pulse-slider-label {
+	flex: 0 0 140px;
+	font-weight: 500;
+	cursor: help;
+}
+
+.pulse-slider {
+	flex: 1;
+	min-width: 120px;
+}
+
+.pulse-slider-value {
+	flex: 0 0 20px;
+	text-align: center;
+	font-weight: 600;
+	font-size: 1.1em;
+}
+
+.pulse-btn-row {
+	margin-top: 1.5em;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.pulse-save-btn {
+	cursor: pointer;
+}
