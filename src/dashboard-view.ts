@@ -20,6 +20,7 @@ export class DashboardView extends ItemView {
 	private folderFilter = "";
 	private selectedPaths = new Set<string>();
 	private comparisonChart: Chart | null = null;
+	private showComparisonChart = false;
 
 	constructor(leaf: WorkspaceLeaf, plugin: ProjectPulsePlugin) {
 		super(leaf);
@@ -228,8 +229,8 @@ export class DashboardView extends ItemView {
 	): void {
 		const count = this.selectedPaths.size;
 
-		// Show chart if we have selected projects
-		if (count >= 2 && count <= 3) {
+		// Show chart only when explicitly requested
+		if (this.showComparisonChart && count >= 2 && count <= 3) {
 			const selected = projects.filter((p) => this.selectedPaths.has(p.file.path));
 			if (selected.length >= 2) {
 				const chartContainer = container.createDiv({ cls: "pulse-chart-container" });
@@ -246,9 +247,22 @@ export class DashboardView extends ItemView {
 
 		if (count > 0) {
 			const row = container.createDiv({ cls: "pulse-compare-row" });
+
+			if (count >= 2 && count <= 3) {
+				const compareBtn = row.createEl("button", {
+					text: "Compare",
+					cls: "mod-cta",
+				});
+				compareBtn.addEventListener("click", () => {
+					this.showComparisonChart = true;
+					this.refresh();
+				});
+			}
+
 			const clearBtn = row.createEl("button", { text: "Clear selection" });
 			clearBtn.addEventListener("click", () => {
 				this.selectedPaths.clear();
+				this.showComparisonChart = false;
 				if (this.comparisonChart) {
 					this.comparisonChart.destroy();
 					this.comparisonChart = null;
@@ -301,10 +315,12 @@ export class DashboardView extends ItemView {
 						this.selectedPaths.add(project.file.path);
 					} else {
 						checkbox.checked = false;
+						return;
 					}
 				} else {
 					this.selectedPaths.delete(project.file.path);
 				}
+				this.showComparisonChart = false;
 				this.refresh();
 			});
 
