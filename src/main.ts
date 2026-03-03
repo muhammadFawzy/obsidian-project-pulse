@@ -2,6 +2,7 @@ import { Plugin } from "obsidian";
 import { ProjectPulseSettings, DEFAULT_SETTINGS } from "./types";
 import { ProjectPulseSettingTab } from "./settings";
 import { ScoringModal } from "./scoring-modal";
+import { DashboardView, DASHBOARD_VIEW_TYPE } from "./dashboard-view";
 
 export default class ProjectPulsePlugin extends Plugin {
 	settings: ProjectPulseSettings = DEFAULT_SETTINGS;
@@ -26,12 +27,40 @@ export default class ProjectPulsePlugin extends Plugin {
 			},
 		});
 
-		// Phase 3: dashboard sidebar view
+		// Dashboard view
+		this.registerView(
+			DASHBOARD_VIEW_TYPE,
+			(leaf) => new DashboardView(leaf, this)
+		);
+
+		this.addCommand({
+			id: "open-dashboard",
+			name: "Open dashboard",
+			callback: () => this.activateDashboard(),
+		});
+
+		this.addRibbonIcon("activity", "Project Pulse", () => {
+			this.activateDashboard();
+		});
+
 		// Phase 4: pulse-radar code block processor
 	}
 
 	onunload(): void {
-		// cleanup
+		this.app.workspace.detachLeavesOfType(DASHBOARD_VIEW_TYPE);
+	}
+
+	private async activateDashboard(): Promise<void> {
+		this.app.workspace.detachLeavesOfType(DASHBOARD_VIEW_TYPE);
+
+		const leaf = this.app.workspace.getRightLeaf(false);
+		if (leaf) {
+			await leaf.setViewState({
+				type: DASHBOARD_VIEW_TYPE,
+				active: true,
+			});
+			this.app.workspace.revealLeaf(leaf);
+		}
 	}
 
 	async loadSettings(): Promise<void> {

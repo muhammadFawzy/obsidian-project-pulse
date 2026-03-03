@@ -43,3 +43,106 @@
 .pulse-save-btn {
 	cursor: pointer;
 }
+
+/* Dashboard */
+
+.pulse-dashboard {
+	padding: 12px;
+}
+
+.pulse-dashboard h2 {
+	margin-top: 0;
+	margin-bottom: 12px;
+}
+
+.pulse-filter-row {
+	margin-bottom: 12px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.pulse-folder-filter {
+	flex: 1;
+}
+
+.pulse-summary-row {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.pulse-summary-card {
+	flex: 1;
+	padding: 10px;
+	border-radius: 6px;
+	background: var(--background-secondary);
+	text-align: center;
+}
+
+.pulse-summary-value {
+	font-size: 1.3em;
+	font-weight: 700;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.pulse-summary-label {
+	font-size: 0.8em;
+	color: var(--text-muted);
+	margin-top: 2px;
+}
+
+.pulse-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.85em;
+}
+
+.pulse-table th {
+	text-align: left;
+	padding: 6px 8px;
+	border-bottom: 2px solid var(--background-modifier-border);
+	cursor: pointer;
+	user-select: none;
+	white-space: nowrap;
+}
+
+.pulse-table th:hover {
+	color: var(--text-accent);
+}
+
+.pulse-table td {
+	padding: 5px 8px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.pulse-table tbody tr:hover {
+	background: var(--background-secondary);
+}
+
+.pulse-project-link {
+	cursor: pointer;
+	color: var(--text-accent);
+	text-decoration: none;
+}
+
+.pulse-project-link:hover {
+	text-decoration: underline;
+}
+
+.pulse-empty {
+	color: var(--text-muted);
+	text-align: center;
+	padding: 2em 0;
+}
+
+.pulse-dots {
+	letter-spacing: 1px;
+}
+
+.pulse-dots-num {
+	color: var(--text-muted);
+	font-size: 0.85em;
+}
