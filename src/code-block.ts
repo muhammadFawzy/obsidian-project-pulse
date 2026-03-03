@@ -6,7 +6,7 @@ import { readPulseData } from "./frontmatter";
 
 export function registerCodeBlock(plugin: ProjectPulsePlugin): void {
 	plugin.registerMarkdownCodeBlockProcessor(
-		"pulse-radar",
+		"pulse",
 		(source: string, el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
 			const filePath = ctx.sourcePath;
 			const file = plugin.app.vault.getAbstractFileByPath(filePath);
