@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-project-pulse",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"description": "Score projects across custom dimensions and visualize trade-offs with radar charts.",
 	"main": "main.js",
 	"type": "module",

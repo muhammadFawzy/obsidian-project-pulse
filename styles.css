@@ -140,6 +140,7 @@
 
 .pulse-dots {
 	letter-spacing: 1px;
+	color: var(--interactive-accent);
 }
 
 .pulse-dots-num {

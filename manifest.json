@@ -1,7 +1,7 @@
 {
 	"id": "project-pulse",
 	"name": "Project Pulse",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Score projects across custom dimensions and visualize trade-offs with radar charts.",
 	"author": "Muhammad Fawzy",
