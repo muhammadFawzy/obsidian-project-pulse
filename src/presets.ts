@@ -13,8 +13,8 @@ export const PRESETS: DimensionPreset[] = [
 		],
 	},
 	{
-		id: "staff-engineer",
-		name: "Staff Engineer",
+		id: "software-engineer",
+		name: "Software Engineer",
 		dimensions: [
 			{ id: "impact", label: "Impact", description: "Business or org-level impact" },
 			{ id: "complexity", label: "Complexity", description: "Technical and organizational complexity" },
@@ -32,6 +32,39 @@ export const PRESETS: DimensionPreset[] = [
 			{ id: "learning", label: "Learning", description: "New skills or knowledge gained" },
 			{ id: "scalability", label: "Scalability", description: "Can this lead to recurring or bigger work?" },
 			{ id: "enjoyment", label: "Enjoyment", description: "Do you enjoy working on it?" },
+		],
+	},
+	{
+		id: "student",
+		name: "Student",
+		dimensions: [
+			{ id: "difficulty", label: "Difficulty", description: "How challenging is this project?" },
+			{ id: "relevance", label: "Relevance", description: "How relevant is it to your goals or major?" },
+			{ id: "deadline-pressure", label: "Deadline Pressure", description: "How tight is the timeline?" },
+			{ id: "interest", label: "Interest", description: "How interested are you in the topic?" },
+			{ id: "grade-impact", label: "Grade Impact", description: "How much does it affect your grade?" },
+		],
+	},
+	{
+		id: "creator",
+		name: "Creator",
+		dimensions: [
+			{ id: "audience-reach", label: "Audience Reach", description: "How many people will this reach?" },
+			{ id: "originality", label: "Originality", description: "How unique or novel is this?" },
+			{ id: "monetization", label: "Monetization", description: "Can this generate income?" },
+			{ id: "enjoyment", label: "Enjoyment", description: "How fun is it to create?" },
+			{ id: "effort", label: "Effort", description: "How much work does it require?" },
+		],
+	},
+	{
+		id: "manager",
+		name: "Manager",
+		dimensions: [
+			{ id: "team-impact", label: "Team Impact", description: "How much does it help the team?" },
+			{ id: "urgency", label: "Urgency", description: "How time-sensitive is this?" },
+			{ id: "strategic-alignment", label: "Strategic Alignment", description: "Does it align with org goals?" },
+			{ id: "resource-cost", label: "Resource Cost", description: "How many resources does it consume?" },
+			{ id: "visibility", label: "Visibility", description: "How visible is this to leadership?" },
 		],
 	},
 ];
