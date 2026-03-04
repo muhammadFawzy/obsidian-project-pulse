@@ -16,11 +16,11 @@ export const PRESETS: DimensionPreset[] = [
 		id: "software-engineer",
 		name: "Software engineer",
 		dimensions: [
-			{ id: "impact", label: "Impact", description: "Business or org-level impact" },
-			{ id: "complexity", label: "Complexity", description: "Technical and organizational complexity" },
-			{ id: "urgency", label: "Urgency", description: "Time sensitivity and stakeholder pressure" },
-			{ id: "team-growth", label: "Team growth", description: "Does it grow the team's capabilities?" },
-			{ id: "technical-debt", label: "Technical debt", description: "Does it reduce or increase tech debt?" },
+			{ id: "energy", label: "Energy", description: "Does this project energize or drain you?" },
+			{ id: "social-capital", label: "Social capital", description: "Does it build trust and relationships?" },
+			{ id: "credibility", label: "Credibility", description: "Does it build your reputation and credibility?" },
+			{ id: "skills", label: "Skills", description: "Are you learning and growing your skills?" },
+			{ id: "quality-of-life", label: "Quality of life", description: "Does it improve your day-to-day work life?" },
 		],
 	},
 	{
